@@ -1,12 +1,15 @@
-type CountryData = {
-    name: {common : string} ,flags: { png : string}, population : number, region : string, capital: string
+const navigateToDetailsPage = (evt: Event, element: CountryData) => {
+    console.log(evt)
+    console.log(element)
 }
-const REST_API_URL = `https://restcountries.com/v3.1/`
+type CountryData = {
+    name: { common: string }, flags: { png: string }, population: number, region: string, capital: string
+}
 
 fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
     let listString = ''
     data.forEach((element: CountryData) => {
-        listString += countryCard`<a href = "./country.html">
+        listString += countryCard`
         <div class="card">
         <div class="card_img"><img src="${element.flags.png}" alt="flag of ${element.name.common}"></div>
         <div class="details">
@@ -15,19 +18,25 @@ fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
         <p>Region: ${element.region}</p>
         <p>Capital: ${element.capital}</p>
         </div>
-        </div>
-        </a>`
+        </div>`
     });
-    
+
     const list = document.querySelector('section.countries') as HTMLDivElement
-    if(list){
+    if (list) {
         list.innerHTML = listString
     }
+    const cards: NodeListOf<HTMLDivElement> = list.querySelectorAll('.card')
+    cards.forEach(card => {
+        card.addEventListener('click', (evt: Event) => {
+            evt.stopPropagation()
+            const nameElem = card.querySelector('.details h2') as HTMLHeadingElement 
+            const name = nameElem.innerText
+            window.location.href = `./country.html?country=${name}`
+        })
+    })
 })
 
-const template = countryCard
-
-function countryCard( strings : TemplateStringsArray, ...texts: (string | number)[]){
+function countryCard(strings: TemplateStringsArray, ...texts: (string | number)[]) {
     return `
     ${strings[0]}
     ${texts[0]}

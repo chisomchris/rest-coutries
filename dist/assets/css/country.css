@@ -64,14 +64,6 @@ main button{
     -ms-border-radius: .125rem;
     -o-border-radius: .125rem;
 }
-@supports (gap: .5rem){
-    .country_details ul{
-        gap: .5rem;
-    }
-    .country_details ul li {
-        margin-left: 0;
-    }
-}
 
 @media screen and (min-width: 820px) {
     .container > section {
@@ -105,5 +97,13 @@ main button{
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 3rem;
+    }
+}
+@supports (gap: .5rem){
+    .country_details ul{
+        gap: .5rem;
+    }
+    .country_details ul li {
+        margin-left: 0;
     }
 }

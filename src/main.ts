@@ -1,4 +1,5 @@
 const LOCAL_STORAGE_KEY = 'COLOR_MODE'
+const REST_API_URL = `https://restcountries.com/v3.1/`
 
 // filter btn dropdown 
 const filter_btn = document.querySelector('.filter button') as HTMLButtonElement
