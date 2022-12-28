@@ -5,7 +5,7 @@ const encodedCountry = encodeURIComponent(country)
 const contents = document.querySelector('section > section')
 
 const back_to_home = document.querySelector('.back_to_home button') as HTMLButtonElement
-if(back_to_home && back_to_home instanceof HTMLButtonElement){
+if (back_to_home && back_to_home instanceof HTMLButtonElement) {
     back_to_home.addEventListener('click', () => {
         window.location.assign('./')
     })
@@ -13,8 +13,8 @@ if(back_to_home && back_to_home instanceof HTMLButtonElement){
 
 fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json()).then(([data]) => {
     const languages: string[] = []
-    const currencies = []
-
+    const currencies: { name: string }[] = []
+    const neighbors: string[] = []
     for (let key in data.languages) {
         if (data.languages[key]) languages.push(data.languages[key])
     }
@@ -23,37 +23,56 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
         if (data.currencies[key]) currencies.push(data.currencies[key])
     }
 
-    const htmlText = Country`
-    <div class="country_flag">
-        <img src="${data.flags.png}" alt="flag of ${data.name.common}">
-    </div>
-    <div class="country_details">
-        <h1>${data.name.common}</h1>
-        <div>
-            <div>
-                <p>Native Name: <span>${data.name.common}</span></p>
-                <p>Population: <span>${data.population}</span></p>
-                <p>Region: <span>${data.region}</span></p>
-                <p>Sub Region: <span>${data.subregion}</span></p>
-                <p>Capital: <span>${data.capital}</span></p>
-            </div>
-            <div>
-                <p>Top Level Domain: <span>${data.tld.join(', ')}</span></p>
-                <p>Currencies: <span>${currencies.map(currency => currency.name).join(', ')}</span></p>
-                <p>Languages: <span>${languages.join(', ')}</span></p>
-            </div>
-        </div>
-        <div>
-            <h3>Border Countries:</h3>
-            <ul>
-                ${'dynamic'}
-            </ul>
-        </div>
-    </div>
-    `
-    if(contents){
-        contents.innerHTML = htmlText
+    for (let key in data.borders) {
+        if (data.borders[key]) neighbors.push(data.borders[key])
     }
+
+    fetch(`${REST_API_URL}all`).then(res => res.json()).then(data1 => {
+        const borders = data1.filter((country: { cca3: string }) => {
+            return neighbors.findIndex(item => item.toLowerCase() === country.cca3.toLowerCase()) !== -1
+        }).map((item: { name: { common: string } }) => item.name.common)
+
+        const htmlText = Country`
+        <div class="country_flag">
+            <img src="${data.flags.png}" alt="flag of ${data.name.common}">
+        </div>
+        <div class="country_details">
+            <h1>${data.name.common}</h1>
+            <div>
+                <div>
+                    <p>Native Name: <span>${data.name.common}</span></p>
+                    <p>Population: <span>${data.population}</span></p>
+                    <p>Region: <span>${data.region}</span></p>
+                    <p>Sub Region: <span>${data.subregion}</span></p>
+                    <p>Capital: <span>${data.capital}</span></p>
+                </div>
+                <div>
+                    <p>Top Level Domain: <span>${data.tld.join(', ')}</span></p>
+                    <p>Currencies: <span>${currencies.map(currency => currency.name).join(', ')}</span></p>
+                    <p>Languages: <span>${languages.join(', ')}</span></p>
+                </div>
+            </div>
+            <div>
+                <h3>Border Countries:</h3>
+                <ul>
+                    ${borders.length ? `<li><button>${borders.join('</button></li><li><button>')}</button></li>` : 'No border countries'} 
+                </ul>
+            </div>
+        </div>
+        `
+        if (contents) {
+            contents.innerHTML = htmlText
+
+            const buttons = contents.querySelectorAll('.country_details ul button') as NodeListOf<HTMLButtonElement>
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const name = button.innerText.toLowerCase()
+                    window.location.assign(`./country.html?country=${name}`)
+                })
+            })
+        }
+    }
+    )
 })
 
 function Country(strings: TemplateStringsArray, ...texts: string[]) {

@@ -42,27 +42,28 @@ main button{
     margin-bottom: 1.5rem;
 }
 .country_details ul{
+    --margin: .25rem;
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem;
+    column-gap: .5rem;
+    row-gap: .25rem;
+    margin-left: calc(-1 * var(--margin));
 }
 .country_details li{
-    margin: .5rem 0;
+    margin: .25rem 0;
+    margin-left: var(--margin);
     background-color: var(--elements);
-}
-.country_details ul li:not(:first-child) {
-    margin-left: 0.5rem;
+    border-radius: .125rem;
+    -webkit-border-radius: .125rem;
+    -moz-border-radius: .125rem;
+    -ms-border-radius: .125rem;
+    -o-border-radius: .125rem;
 }
 .country_details li > button{
     background-color: transparent;
     color: inherit;
     font-weight: 300;
     padding: .25em 1.125em;
-    border-radius: .125rem;
-    -webkit-border-radius: .125rem;
-    -moz-border-radius: .125rem;
-    -ms-border-radius: .125rem;
-    -o-border-radius: .125rem;
 }
 
 @media screen and (min-width: 820px) {
@@ -97,13 +98,5 @@ main button{
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 3rem;
-    }
-}
-@supports (gap: .5rem){
-    .country_details ul{
-        gap: .5rem;
-    }
-    .country_details ul li {
-        margin-left: 0;
     }
 }
