@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.1/css/all.min.css"
+        integrity="sha512-KulI0psuJQK8UMpOeiMLDXJtGOZEBm8RZNTyBBHIWqoXoPMFcw+L5AEo0YMpsW8BfiuWrdD1rH6GWGgQBF59Lg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/country.css">
+
+    <title>Frontend Mentor | Rest Countries API</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+        .attribution {
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .attribution a {
+            color: hsl(228, 45%, 44%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#">Where in the world</a>
+                <button> <i class="fa fa-moon" aria-hidden="true"></i> Dark Mode</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <div class="back_to_home">
+                <button> <i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+            <section>
+                <div class="country_flag">
+                    <img src="./assets/images/login.PNG" alt="country flag">
+                </div>
+                <div class="country_details">
+                    <h1>Country Name</h1>
+                    <div>
+                        <div>
+                            <p>Native Name: <span>ChisomChris</span></p>
+                            <p>Population: <span>1234876</span></p>
+                            <p>Region: <span>Africa</span></p>
+                            <p>Sub Region: <span>West Africa</span></p>
+                            <p>Capital: <span>Lagos</span></p>
+                        </div>
+                        <div>
+                            <p>Top Level Domain: <span>.ng</span></p>
+                            <p>Currencies: <span>Naira</span></p>
+                            <p>Languages: <span>Huasa, Yoruba, Igbo</span></p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Border Countries:</h3>
+                        <ul>
+                            <li><button>ChisomChris</button></li>
+                            <li><button>chisom</button></li>
+                            <li><button>amarachi</button></li>
+                            <li><button>chikaima</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    <script src="./main.js"></script>
+    <script src="./country.js"></script>
+    <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+        Coded by <a href="#">ChisomChris</a>.
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+/* main */
+main {
+    padding: 1rem 0;
+}
+
+.search_and_filter {
+    --pad: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search {
+    position: relative;
+    background-color: var(--elements);
+    padding: .5rem;
+    border-radius: .25rem;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    -o-border-radius: .25rem;
+    width: 100%;
+}
+
+.search input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    padding-left: calc((1.25 * var(--pad)) + 1.5rem);
+}
+
+.search input::placeholder {
+    color: inherit;
+}
+
+.search i {
+    position: absolute;
+    top: 50%;
+    left: calc(1.25 * var(--pad));
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+.filter {
+    position: relative;
+    margin: .5rem 0;
+    background-color: var(--elements);
+    padding: .5rem 1rem;
+    margin: .5rem 0;
+    border-radius: .25rem;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    -o-border-radius: .25rem;
+}
+
+.filter button {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.filter button i {
+    margin-left: 1.75rem;
+}
+
+.filter ul {
+    overflow: hidden;
+    height: 0;
+    padding: 0;
+    position: absolute;
+    background-color: var(--elements);
+    width: 100%;
+    left: 0;
+    top: calc(100% + .25rem);
+    border-radius: .25rem;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    -o-border-radius: .25rem;
+}
+
+.filter ul.active {
+    height: auto;
+    padding: .75rem 1rem;
+    z-index: 10;
+}
+
+.filter ul li+li {
+    margin-top: 0.25rem;
+}
+
+/* country list */
+.countries {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+    gap: 2rem;
+    padding-top: 1rem;
+}
+
+.card {
+    background-color: var(--elements);
+    border-radius: .25rem;
+    overflow: hidden;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    -o-border-radius: .25rem;
+}
+
+.card .details {
+    padding: .5rem 1rem 1.5rem;
+}
+.card h2{
+    margin-bottom: .75em;
+    margin-top: .75em;
+    line-height: 1.125em;
+}
+.card .card_img{
+    width: 100%;
+    aspect-ratio: 5/3;
+}
+.card img {
+    height: 100%;
+    width: 100%;
+}
+/* legacy support for aspect-ratio */
+@supports not (aspect-ratio: 5/3){
+    .card .card_img{
+        position: relative;
+        padding-top: 60%;
+    }
+    .card .card_img::before{
+        content: '';
+        float: left;
+    }
+    .card .card_img::after{
+        display: block;
+        content: '';
+        clear: both;
+    }
+    .card .card_img img{
+        top: 0%;
+        position: absolute;
+    }
+}
+/* tablets and desktops */
+@media screen and (min-width: 768px) {
+    .search {
+        width: auto;
+        min-width: 400px;
+    }
+}

@@ -1,0 +1,109 @@
+/* main */
+.back_to_home{
+    padding: 1rem 0 2rem;
+}
+main button{
+    box-shadow: 0 0 10px #00000060;
+}
+.back_to_home button{
+    color: var(--text);
+    padding: .5rem 1.5rem;
+    background-color: var(--elements);
+    border-radius: .25rem;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    -o-border-radius: .25rem;
+}
+.back_to_home button i{
+    margin-right: 1rem;
+}
+.country_flag{
+    margin-bottom: 2rem;
+}
+/* .country_details{
+    background-color: rebeccapurple;
+} */
+.country_details h1{
+    font-weight: 800;
+    margin-bottom: .75rem;
+}
+.country_details p{
+    font-weight: 600;
+    line-height: 1.75em;
+}
+.country_details p > span{
+    font-weight: 300;
+}
+.country_details > div {
+    margin-bottom: 2rem;
+}
+.country_details > div > div{
+    margin-bottom: 1.5rem;
+}
+.country_details ul{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+.country_details li{
+    margin: .5rem 0;
+    background-color: var(--elements);
+}
+.country_details ul li:not(:first-child) {
+    margin-left: 0.5rem;
+}
+.country_details li > button{
+    background-color: transparent;
+    color: inherit;
+    font-weight: 300;
+    padding: .25em 1.125em;
+    border-radius: .125rem;
+    -webkit-border-radius: .125rem;
+    -moz-border-radius: .125rem;
+    -ms-border-radius: .125rem;
+    -o-border-radius: .125rem;
+}
+@supports (gap: .5rem){
+    .country_details ul{
+        gap: .5rem;
+    }
+    .country_details ul li {
+        margin-left: 0;
+    }
+}
+
+@media screen and (min-width: 820px) {
+    .container > section {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 3rem;
+        align-items: center;
+    }
+    .country_details p{
+        line-height: 1.25em;
+    }
+    .country_details > div {
+        margin-bottom: .75rem;
+    }
+    .country_details > div > div{
+        margin-bottom: 0rem;
+    }
+    .country_flag{
+        grid-column: 1/7;
+    }
+    .country_flag img{
+        height: 100%;
+        width: 100%;
+        object-position: center;
+        object-fit: cover;
+    }
+    .country_details{
+        grid-column: 7/13;
+    }
+    .country_details > div:first-of-type{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3rem;
+    }
+}
