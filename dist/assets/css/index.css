@@ -2,7 +2,7 @@
 main {
     padding: 1rem 0;
 }
-
+/* search and filter section */
 .search_and_filter {
     --pad: 1.25rem;
     display: flex;
@@ -107,25 +107,25 @@ main {
 
 .card {
     background-color: var(--elements);
-    border-radius: .25rem;
+    border-radius: .5rem;
     overflow: hidden;
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    -ms-border-radius: .25rem;
-    -o-border-radius: .25rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem;
 }
 
 .card .details {
     padding: .5rem 1rem 1.5rem;
 }
 .card h2{
-    margin-bottom: .75em;
-    margin-top: .75em;
+    margin-bottom: .75rem;
+    margin-top: .75rem;
     line-height: 1.125em;
 }
 .card .card_img{
     width: 100%;
-    aspect-ratio: 5/3;
+    aspect-ratio: 5 / 3 ;
 }
 .card img {
     height: 100%;
@@ -148,6 +148,7 @@ main {
     }
     .card .card_img img{
         top: 0%;
+        left: 0%;
         position: absolute;
     }
 }

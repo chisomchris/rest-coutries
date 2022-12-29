@@ -13,6 +13,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
     const languages = [];
     const currencies = [];
     const neighbors = [];
+    const native_names = [];
     for (let key in data.languages) {
         if (data.languages[key])
             languages.push(data.languages[key]);
@@ -24,6 +25,10 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
     for (let key in data.borders) {
         if (data.borders[key])
             neighbors.push(data.borders[key]);
+    }
+    for (let key in data.name.nativeName) {
+        if (data.name.nativeName[key])
+            native_names.push(data.name.nativeName[key].official);
     }
     fetch(`${REST_API_URL}all`).then(res => res.json()).then(data1 => {
         const borders = data1.filter((country) => {
@@ -37,7 +42,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
             <h1>${data.name.common}</h1>
             <div>
                 <div>
-                    <p>Native Name: <span>${data.name.common}</span></p>
+                    <p>Native Name${native_names.length > 1 ? 's' : ''}: <span>${native_names.join(',  ')}</span></p>
                     <p>Population: <span>${data.population}</span></p>
                     <p>Region: <span>${data.region}</span></p>
                     <p>Sub Region: <span>${data.subregion}</span></p>
@@ -71,30 +76,6 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
 });
 function Country(strings, ...texts) {
     return `
-    ${strings[0]}
-    ${texts[0]}
-    ${strings[1]}
-    ${texts[1]}
-    ${strings[2]}
-    ${texts[2]}
-    ${strings[3]}
-    ${texts[3]}
-    ${strings[4]}
-    ${texts[4]}
-    ${strings[5]}
-    ${texts[5]}
-    ${strings[6]}
-    ${texts[6]}
-    ${strings[7]}
-    ${texts[7]}
-    ${strings[8]}
-    ${texts[8]}
-    ${strings[9]}
-    ${texts[9]}
-    ${strings[10]}
-    ${texts[10]}
-    ${strings[11]}
-    ${texts[11]}
-    ${strings[12]}
+    ${strings[0]}${texts[0]}${strings[1]}${texts[1]}${strings[2]}${texts[2]}${strings[3]}${texts[3]}${strings[4]}${texts[4]}${strings[5]}${texts[5]}${strings[6]}${texts[6]}${strings[7]}${texts[7]}${strings[8]}${texts[8]}${strings[9]}${texts[9]}${strings[10]}${texts[10]}${strings[11]}${texts[11]}${strings[12]}${texts[12]}${strings[13]}
     `;
 }
