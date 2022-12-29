@@ -57,7 +57,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
             <div>
                 <h3>Border Countries:</h3>
                 <ul>
-                    ${borders.length ? `<li><button>${borders.join('</button></li><li><button>')}</button></li>` : 'No border countries'} 
+                    ${borders.length ? `<li><button>${borders.join('</button></li><li><button>')}</button></li>` : ' No border countries'} 
                 </ul>
             </div>
         </div>
