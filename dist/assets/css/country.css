@@ -1,11 +1,13 @@
 /* main */
-.back_to_home{
+.back_to_home {
     padding: 1rem 0 2rem;
 }
-main button{
+
+main button {
     box-shadow: 0 0 10px #00000060;
 }
-.back_to_home button{
+
+.back_to_home button {
     color: var(--text);
     padding: .5rem 1.5rem;
     background-color: var(--elements);
@@ -15,33 +17,39 @@ main button{
     -ms-border-radius: .25rem;
     -o-border-radius: .25rem;
 }
-.back_to_home button i{
+
+.back_to_home button i {
     margin-right: 1rem;
 }
-.country_flag{
+
+/* contents */
+.country_flag {
     margin-bottom: 2rem;
 }
-/* .country_details{
-    background-color: rebeccapurple;
-} */
-.country_details h1{
+
+.country_details h1 {
     font-weight: 800;
     margin-bottom: .75rem;
 }
-.country_details p{
+
+.country_details p {
     font-weight: 600;
     line-height: 1.75em;
 }
-.country_details p > span{
+
+.country_details p>span {
     font-weight: 300;
 }
-.country_details > div {
+
+.country_details>div {
     margin-bottom: 2rem;
 }
-.country_details > div > div{
+
+.country_details>div>div {
     margin-bottom: 1.5rem;
 }
-.country_details ul{
+
+.country_details ul {
     --margin: .25rem;
     display: flex;
     flex-wrap: wrap;
@@ -49,7 +57,8 @@ main button{
     row-gap: .25rem;
     margin-left: calc(-1 * var(--margin));
 }
-.country_details li{
+
+.country_details li {
     margin: .25rem 0;
     margin-left: var(--margin);
     background-color: var(--elements);
@@ -59,11 +68,176 @@ main button{
     -ms-border-radius: .125rem;
     -o-border-radius: .125rem;
 }
-.country_details li > button{
+
+.country_details li>button {
     background-color: transparent;
     color: inherit;
     font-weight: 300;
     padding: .25em 1.125em;
+}
+
+/* loading animation*/
+.loading {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loading .spinner {
+    animation-name: spin;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-direction: normal;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.loading .spinner>div {
+    --offset: 14.645%;
+    transform: translate(-50%, -50%);
+    background-color: var(--text);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+
+.loading .spinner>div:nth-child(1) {
+    opacity: .6;
+    top: 0;
+    left: 50%;
+}
+
+.loading .spinner>div:nth-child(2) {
+    opacity: .65;
+    top: var(--offset);
+    left: calc(100% - var(--offset));
+}
+
+.loading .spinner>div:nth-child(3) {
+    opacity: .75;
+    top: 50%;
+    left: 100%;
+}
+
+.loading .spinner>div:nth-child(4) {
+    opacity: .8;
+    top: calc(100% - var(--offset));
+    left: calc(100% - var(--offset));
+}
+
+.loading .spinner>div:nth-child(5) {
+    opacity: .85;
+    top: 100%;
+    left: 50%;
+}
+
+.loading .spinner>div:nth-child(6) {
+    opacity: .9;
+    top: calc(100% - var(--offset));
+    left: var(--offset);
+}
+
+.loading .spinner>div:nth-child(7) {
+    opacity: .95;
+    top: 50%;
+}
+
+.loading .spinner>div:nth-child(8) {
+    opacity: 1;
+    top: var(--offset);
+    left: var(--offset);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+    }
+
+    12.5% {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+    }
+
+    25% {
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+    }
+
+    37.5% {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+        -moz-transform: rotate(135deg);
+        -ms-transform: rotate(135deg);
+        -o-transform: rotate(135deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+    }
+
+    62.5% {
+        transform: rotate(225deg);
+        -webkit-transform: rotate(225deg);
+        -moz-transform: rotate(225deg);
+        -ms-transform: rotate(225deg);
+        -o-transform: rotate(225deg);
+    }
+
+    75% {
+        transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -moz-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+    }
+
+    87.5% {
+        transform: rotate(325deg);
+        -webkit-transform: rotate(325deg);
+        -moz-transform: rotate(325deg);
+        -ms-transform: rotate(325deg);
+        -o-transform: rotate(325deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+    }
 }
 
 @media screen and (min-width: 820px) {
@@ -73,28 +247,49 @@ main button{
         gap: 3rem;
         align-items: center;
     }
-    .country_details p{
+    .loading{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .loading .spinner{
+        top: 30%;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+}
+    .country_details p {
         line-height: 1.25em;
     }
-    .country_details > div {
+
+    .country_details>div {
         margin-bottom: .75rem;
     }
-    .country_details > div > div{
+
+    .country_details>div>div {
         margin-bottom: 0rem;
     }
-    .country_flag{
+
+    .country_flag {
         grid-column: 1/7;
     }
-    .country_flag img{
+
+    .country_flag img {
         height: 100%;
         width: 100%;
         object-position: center;
         object-fit: cover;
     }
-    .country_details{
+
+    .country_details {
         grid-column: 7/13;
     }
-    .country_details > div:first-of-type{
+
+    .country_details>div:first-of-type {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 3rem;

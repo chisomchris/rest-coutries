@@ -60,6 +60,7 @@ img {
 }
 
 button {
+    cursor: pointer;
     border: none;
 }
 
@@ -99,4 +100,5 @@ header nav button {
     font-size: .85rem;
     font-weight: 300;
     color: inherit;
+    padding: .5em 1.75em;
 }
