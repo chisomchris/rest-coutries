@@ -1,14 +1,16 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 let search_term;
-let filterTerm;
+let filterTerm = 'all';
 let countryList;
-fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
-    countryList = data;
-    const listElem = document.querySelector('section.countries');
-    if (listElem) {
-        renderList(countryList, listElem);
-    }
-});
 function countryCard(strings, ...texts) {
     return `
     ${strings[0]}
@@ -39,19 +41,31 @@ function filter(list, region) {
         throw new Error('Invalid Input types');
     }
 }
+function validate(term, regions) {
+    if (term && regions.includes(term))
+        return true;
+    return false;
+}
 const filterBtns = document.querySelectorAll('.filter ul button');
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        var _a;
-        let list;
+        var _a, _b;
         const region = (_a = btn.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase().trim();
         if (region) {
-            const listElem = document.querySelector('section.countries');
-            if (region === 'all') {
-                return renderList(countryList, listElem);
+            const a_card = document.querySelector('.card');
+            if (a_card && a_card instanceof HTMLDivElement) {
+                const listElem = document.querySelector('section.countries');
+                sessionStorage.setItem('key', region);
+                if (region === 'all')
+                    renderList(countryList, listElem);
+                else
+                    renderList(filter(countryList, region), listElem);
             }
-            const filteredList = filter(countryList, region);
-            renderList(filteredList, listElem);
+            const parent = (_b = btn.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement;
+            const btns = parent.querySelectorAll('li button');
+            console.log(btns);
+            btns.forEach(btn => btn.classList.remove('active'));
+            btn.classList.add('active');
         }
     });
 });
@@ -82,3 +96,61 @@ function renderList(list, elem) {
         });
     });
 }
+window.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (typeof (Storage)) {
+            const regions = ['all', 'africa', 'americas', 'asia', 'europe', 'oceania'];
+            const term = sessionStorage.getItem('key');
+            if (term && validate(term, regions)) {
+                filterTerm = term;
+                fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
+                    countryList = data;
+                    const listElem = document.querySelector('section.countries');
+                    if (listElem) {
+                        if (filterTerm === 'all') {
+                            return renderList(countryList, listElem);
+                        }
+                        renderList(filter(countryList, filterTerm), listElem);
+                        filterBtns.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        const activeBtn = [...filterBtns].find(btn => { var _a; return ((_a = btn.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase().trim()) === filterTerm; });
+                        activeBtn === null || activeBtn === void 0 ? void 0 : activeBtn.classList.add('active');
+                    }
+                }).catch(error => {
+                    throw new Error(error.message);
+                });
+                // filter list and render it
+            }
+            else {
+                fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
+                    countryList = data;
+                    const listElem = document.querySelector('section.countries');
+                    if (listElem) {
+                        if (filterTerm === 'all') {
+                            renderList(countryList, listElem);
+                        }
+                    }
+                }).catch(error => {
+                    throw new Error(error.message);
+                });
+            }
+        }
+        else {
+            fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
+                countryList = data;
+                const listElem = document.querySelector('section.countries');
+                if (listElem) {
+                    if (filterTerm === 'all') {
+                        renderList(countryList, listElem);
+                    }
+                }
+            }).catch(error => {
+                throw new Error(error.message);
+            });
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+}));

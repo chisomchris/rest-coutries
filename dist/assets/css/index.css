@@ -51,7 +51,6 @@ main {
     position: relative;
     margin: .5rem 0;
     background-color: var(--elements);
-    padding: .5rem 1rem;
     margin: .5rem 0;
     border-radius: .25rem;
     -webkit-border-radius: .25rem;
@@ -64,6 +63,7 @@ main {
     background-color: transparent;
     border: none;
     color: inherit;
+    padding: .5rem 1rem;
     cursor: pointer;
 }
 
@@ -81,20 +81,22 @@ main {
     left: 0;
     top: calc(100% + .25rem);
     border-radius: .25rem;
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    -ms-border-radius: .25rem;
-    -o-border-radius: .25rem;
 }
 
 .filter ul.active {
     height: auto;
-    padding: .75rem 1rem;
     z-index: 10;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
 }
-
-.filter ul li+li {
-    margin-top: 0.25rem;
+.filter li button{
+    padding-left: 1rem;
+    width: 100%;
+    text-align: left;
+}
+.filter li button.active{
+    color: var(--text-inv);
+    background-color: var(--text);
 }
 
 /* country list */
