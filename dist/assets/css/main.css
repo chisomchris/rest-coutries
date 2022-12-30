@@ -55,6 +55,15 @@ body {
     background-color: var(--bg);
     color: var(--text);
     font-size: 16px;
+    display: flex;
+    min-height: calc(100vh - 4rem);
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+footer{
+    margin-top: auto;
+    padding: .5rem 0 1rem;
 }
 
 img {
