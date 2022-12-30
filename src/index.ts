@@ -44,6 +44,7 @@ function validate(term: string, regions: string[]): term is Filter {
 }
 
 const filterBtns = document.querySelectorAll('.filter ul button') as NodeListOf<HTMLButtonElement>
+
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const region = btn.textContent?.toLowerCase().trim()
@@ -51,20 +52,15 @@ filterBtns.forEach(btn => {
             const a_card = document.querySelector('.card') as HTMLDivElement
             if (a_card && a_card instanceof HTMLDivElement) {
                 const listElem: HTMLElement = document.querySelector('section.countries')!
-                sessionStorage.setItem('key', region)
+                sessionStorage.setItem('region', region)
                 if (region === 'all') renderList(countryList, listElem)
                 else renderList(filter(countryList, region), listElem)
             }
-
-            const parent = btn.parentElement?.parentElement as HTMLUListElement
-            const btns = parent.querySelectorAll('li button')
-            console.log(btns)
-            btns.forEach(btn => btn.classList.remove('active'))
+            filterBtns.forEach(btn => btn.classList.remove('active'))
             btn.classList.add('active')
         }
     })
 })
-
 
 function renderList(list: any[], elem: HTMLElement) {
     let listString = ''
@@ -96,63 +92,49 @@ function renderList(list: any[], elem: HTMLElement) {
     })
 }
 
+function callAPI(elem: HTMLElement, filterFn?: typeof filter) {
+    fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
+        // save data to memory
+        countryList = data
+        if (elem && elem instanceof HTMLElement) {
+            if (filterTerm === 'all') {
+                return renderList(countryList, elem)
+            }
+            if (filterFn && typeof filterFn === 'function') {
+                renderList(filterFn(countryList, filterTerm), elem)
+                // add active class to active region button 
+                filterBtns.forEach(btn => {
+                    btn.classList.remove('active')
+                })
+                const activeBtn = [...filterBtns].find(btn => btn.textContent?.toLowerCase().trim() === filterTerm
+                )
+                activeBtn?.classList.add('active')
+            }
+        }
+    }).catch(error => {
+        throw new Error(error.message)
+    })
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
     try {
+        const listElem = document.querySelector('section.countries') as HTMLElement
         if (typeof (Storage)) {
             const regions = ['all', 'africa', 'americas', 'asia', 'europe', 'oceania']
-            const term = sessionStorage.getItem('key')
-
+            const term = sessionStorage.getItem('region')
             if (term && validate(term, regions)) {
                 filterTerm = term
-                fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
-                    countryList = data
-                    const listElem = document.querySelector('section.countries') as HTMLElement
-                    if (listElem) {
-                        if (filterTerm === 'all') {
-                            return renderList(countryList, listElem)
-                        }
-                        renderList(filter(countryList, filterTerm), listElem)
-
-                        filterBtns.forEach(btn => {
-                            btn.classList.remove('active')
-                        })
-                        const activeBtn = [...filterBtns].find(btn => btn.textContent?.toLowerCase().trim() === filterTerm
-                        )
-                        activeBtn?.classList.add('active')
-                    }
-                }).catch(error => {
-                    throw new Error(error.message)
-                })
-                // filter list and render it
+                // call API, filter list and render it
+                callAPI(listElem, filter)
             } else {
-                fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
-                    countryList = data
-                    const listElem = document.querySelector('section.countries') as HTMLElement
-                    if (listElem) {
-                        if (filterTerm === 'all') {
-                            renderList(countryList, listElem)
-                        }
-                    }
-                }).catch(error => {
-                    throw new Error(error.message)
-                })
+                callAPI(listElem)
             }
-
         } else {
-            fetch(`${REST_API_URL}all`).then(response => response.json()).then(data => {
-                countryList = data
-                const listElem = document.querySelector('section.countries') as HTMLElement
-                if (listElem) {
-                    if (filterTerm === 'all') {
-                        renderList(countryList, listElem)
-                    }
-                }
-            }).catch(error => {
-                throw new Error(error.message)
-            })
+            callAPI(listElem)
         }
     } catch (error) {
         console.error(error)
     }
 })
+
 
