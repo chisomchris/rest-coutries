@@ -51,6 +51,7 @@ filterBtns.forEach(btn => {
         if (region) {
             const listElem: HTMLElement = document.querySelector('section.countries')!
             sessionStorage.setItem('region', region)
+            filterTerm = region as Filter
             if (region === 'all') renderList(countryList, listElem)
             else renderList(filter(countryList, region), listElem)
         }
