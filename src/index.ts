@@ -3,7 +3,7 @@ type CountryData = {
 }
 
 type Filter = 'all' | 'africa' | 'americas' | 'asia' | 'europe' | 'oceania'
-let search_term: string
+let search_term: string = ''
 let filterTerm: Filter = 'all'
 let countryList: any[]
 
@@ -49,16 +49,14 @@ filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const region = btn.textContent?.toLowerCase().trim()
         if (region) {
-            const a_card = document.querySelector('.card') as HTMLDivElement
-            if (a_card && a_card instanceof HTMLDivElement) {
-                const listElem: HTMLElement = document.querySelector('section.countries')!
-                sessionStorage.setItem('region', region)
-                if (region === 'all') renderList(countryList, listElem)
-                else renderList(filter(countryList, region), listElem)
-            }
-            filterBtns.forEach(btn => btn.classList.remove('active'))
-            btn.classList.add('active')
+            const listElem: HTMLElement = document.querySelector('section.countries')!
+            sessionStorage.setItem('region', region)
+            filterTerm = region as Filter
+            if (region === 'all') renderList(countryList, listElem)
+            else renderList(filter(countryList, region), listElem)
         }
+        filterBtns.forEach(btn => btn.classList.remove('active'))
+        btn.classList.add('active')
     })
 })
 
@@ -137,4 +135,27 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 })
 
+// search funtionality
+const search_input = document.querySelector('input[type="search"]') as HTMLInputElement
 
+
+search_input.addEventListener('keyup', function () {
+    const listElem = document.querySelector('section.countries') as HTMLElement
+    if (this.value.toLowerCase().trim() !== search_term) {
+        search_term = this.value.toLowerCase().trim()
+        console.log(search_term)
+        const fList = search(countryList, search_term)
+        renderList(filter(fList, filterTerm), listElem)
+    }
+})
+
+function search(list: (CountryData & { cca3: string })[], term: string) {
+    return list.filter(item => {
+        if (term.toLowerCase().trim().includes('code ') && term.toLowerCase().trim().startsWith('code')) {
+            const raw = term.toLowerCase().trim()
+            let code = raw.slice(4).trim().toLowerCase()
+            return item.cca3.toLowerCase() === code
+        }
+        return item.name.common.toLowerCase().trim().includes(term)
+    })
+}

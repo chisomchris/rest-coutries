@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-let search_term;
+let search_term = '';
 let filterTerm = 'all';
 let countryList;
 function countryCard(strings, ...texts) {
@@ -52,18 +52,16 @@ filterBtns.forEach(btn => {
         var _a;
         const region = (_a = btn.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase().trim();
         if (region) {
-            const a_card = document.querySelector('.card');
-            if (a_card && a_card instanceof HTMLDivElement) {
-                const listElem = document.querySelector('section.countries');
-                sessionStorage.setItem('region', region);
-                if (region === 'all')
-                    renderList(countryList, listElem);
-                else
-                    renderList(filter(countryList, region), listElem);
-            }
-            filterBtns.forEach(btn => btn.classList.remove('active'));
-            btn.classList.add('active');
+            const listElem = document.querySelector('section.countries');
+            sessionStorage.setItem('region', region);
+            filterTerm = region;
+            if (region === 'all')
+                renderList(countryList, listElem);
+            else
+                renderList(filter(countryList, region), listElem);
         }
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        btn.classList.add('active');
     });
 });
 function renderList(list, elem) {
@@ -138,3 +136,24 @@ window.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void
         console.error(error);
     }
 }));
+// search funtionality
+const search_input = document.querySelector('input[type="search"]');
+search_input.addEventListener('keyup', function () {
+    const listElem = document.querySelector('section.countries');
+    if (this.value.toLowerCase().trim() !== search_term) {
+        search_term = this.value.toLowerCase().trim();
+        console.log(search_term);
+        const fList = search(countryList, search_term);
+        renderList(filter(fList, filterTerm), listElem);
+    }
+});
+function search(list, term) {
+    return list.filter(item => {
+        if (term.toLowerCase().trim().includes('code ') && term.toLowerCase().trim().startsWith('code')) {
+            const raw = term.toLowerCase().trim();
+            let code = raw.slice(4).trim().toLowerCase();
+            return item.cca3.toLowerCase() === code;
+        }
+        return item.name.common.toLowerCase().trim().includes(term);
+    });
+}
