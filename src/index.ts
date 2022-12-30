@@ -6,6 +6,7 @@ type Filter = 'all' | 'africa' | 'americas' | 'asia' | 'europe' | 'oceania'
 let search_term: string = ''
 let filterTerm: Filter = 'all'
 let countryList: any[]
+const search_input = document.querySelector('input[type="search"]') as HTMLInputElement
 
 function countryCard(strings: TemplateStringsArray, ...texts: (string | number)[]) {
     return `
@@ -136,9 +137,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 })
 
 // search funtionality
-const search_input = document.querySelector('input[type="search"]') as HTMLInputElement
-
-
 search_input.addEventListener('keyup', function () {
     const listElem = document.querySelector('section.countries') as HTMLElement
     if (this.value.toLowerCase().trim() !== search_term) {

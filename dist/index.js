@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 let search_term = '';
 let filterTerm = 'all';
 let countryList;
+const search_input = document.querySelector('input[type="search"]');
 function countryCard(strings, ...texts) {
     return `
     ${strings[0]}
@@ -137,7 +138,6 @@ window.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void
     }
 }));
 // search funtionality
-const search_input = document.querySelector('input[type="search"]');
 search_input.addEventListener('keyup', function () {
     const listElem = document.querySelector('section.countries');
     if (this.value.toLowerCase().trim() !== search_term) {
