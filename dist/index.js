@@ -30,7 +30,7 @@ function countryCard(strings, ...texts) {
     `;
 }
 function filter(list, region) {
-    const regions = ['africa', 'americas', 'asia', 'europe', 'oceania'];
+    const regions = ['all', 'africa', 'americas', 'asia', 'europe', 'oceania'];
     if (list && Array.isArray(list) && typeof region === 'string') {
         if (!regions.includes(region.toLowerCase()))
             throw new Error(`Invalid argument: Expects ${regions.join(' or ')} as argument.`);
@@ -55,7 +55,6 @@ filterBtns.forEach(btn => {
         if (region) {
             const listElem = document.querySelector('section.countries');
             sessionStorage.setItem('region', region);
-            filterTerm = region;
             if (region === 'all')
                 renderList(countryList, listElem);
             else
@@ -122,7 +121,6 @@ window.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void
             const term = sessionStorage.getItem('region');
             if (term && validate(term, regions)) {
                 filterTerm = term;
-                // call API, filter list and render it
                 callAPI(listElem, filter);
             }
             else {
@@ -137,14 +135,13 @@ window.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void
         console.error(error);
     }
 }));
-// search funtionality
 search_input.addEventListener('keyup', function () {
     const listElem = document.querySelector('section.countries');
     if (this.value.toLowerCase().trim() !== search_term) {
         search_term = this.value.toLowerCase().trim();
-        console.log(search_term);
-        const fList = search(countryList, search_term);
-        renderList(filter(fList, filterTerm), listElem);
+        if (filterTerm === 'all')
+            return renderList(search(countryList, search_term), listElem);
+        renderList(filter(search(countryList, search_term), filterTerm), listElem);
     }
 });
 function search(list, term) {

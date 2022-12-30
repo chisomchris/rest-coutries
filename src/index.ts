@@ -27,10 +27,9 @@ function countryCard(strings: TemplateStringsArray, ...texts: (string | number)[
 }
 
 function filter(list: any[], region: string) {
-    const regions = ['africa', 'americas', 'asia', 'europe', 'oceania']
+    const regions = ['all', 'africa', 'americas', 'asia', 'europe', 'oceania']
     if (list && Array.isArray(list) && typeof region === 'string') {
         if (!regions.includes(region.toLowerCase())) throw new Error(`Invalid argument: Expects ${regions.join(' or ')} as argument.`)
-
         return list.filter(country => {
             return country.region.toLowerCase().trim() === region.toLowerCase().trim()
         })
@@ -52,7 +51,6 @@ filterBtns.forEach(btn => {
         if (region) {
             const listElem: HTMLElement = document.querySelector('section.countries')!
             sessionStorage.setItem('region', region)
-            filterTerm = region as Filter
             if (region === 'all') renderList(countryList, listElem)
             else renderList(filter(countryList, region), listElem)
         }
@@ -123,7 +121,6 @@ window.addEventListener('DOMContentLoaded', async () => {
             const term = sessionStorage.getItem('region')
             if (term && validate(term, regions)) {
                 filterTerm = term
-                // call API, filter list and render it
                 callAPI(listElem, filter)
             } else {
                 callAPI(listElem)
@@ -136,14 +133,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 })
 
-// search funtionality
 search_input.addEventListener('keyup', function () {
     const listElem = document.querySelector('section.countries') as HTMLElement
     if (this.value.toLowerCase().trim() !== search_term) {
         search_term = this.value.toLowerCase().trim()
-        console.log(search_term)
-        const fList = search(countryList, search_term)
-        renderList(filter(fList, filterTerm), listElem)
+        if (filterTerm === 'all') return renderList(search(countryList, search_term), listElem)
+        renderList(filter(search(countryList, search_term), filterTerm), listElem)
     }
 })
 
