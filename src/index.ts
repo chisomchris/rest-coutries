@@ -62,6 +62,10 @@ filterBtns.forEach(btn => {
 
 function renderList(list: any[], elem: HTMLElement) {
     let listString = ''
+    if(list.length === 0){
+        console.log('first')
+        return elem.innerHTML = '<p>No country match...</p>'
+    }
 
     list.forEach((element: CountryData) => {
         listString += countryCard`
@@ -142,14 +146,6 @@ search_input.addEventListener('keyup', function () {
         renderList(filter(search(countryList, search_term), filterTerm), listElem)
     }
 })
-// search_input.addEventListener('change', function () {
-//     const listElem = document.querySelector('section.countries') as HTMLElement
-//     if (this.value.toLowerCase().trim() === '') {
-//         search_term = this.value.toLowerCase().trim()
-//         if (filterTerm === 'all') return renderList(countryList, listElem)
-//         renderList(filter(countryList, filterTerm), listElem)
-//     }
-// })
 
 function search(list: (CountryData & { cca3: string })[], term: string) {
     return list.filter(item => {

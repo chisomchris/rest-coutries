@@ -67,7 +67,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
         `
         if (contents) {
             contents.innerHTML = htmlText
-
+            document.title = `${country} | Frontend Mentor`
             const buttons = contents.querySelectorAll('.country_details ul button') as NodeListOf<HTMLButtonElement> 
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
