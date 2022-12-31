@@ -68,7 +68,7 @@ filterBtns.forEach(btn => {
 function renderList(list, elem) {
     let listString = '';
     if (list.length === 0) {
-        console.log('first');
+        ('first');
         return elem.innerHTML = '<p>No country match...</p>';
     }
     list.forEach((element) => {

@@ -13,9 +13,10 @@ if (back_to_home && back_to_home instanceof HTMLButtonElement) {
 
 fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json()).then(([data]) => {
     const languages: string[] = []
-    const currencies : {name: string}[] = []
+    const currencies: { name: string }[] = []
     const neighbors: string[] = []
     const native_names: string[] = []
+
     for (let key in data.languages) {
         if (data.languages[key]) languages.push(data.languages[key])
     }
@@ -45,7 +46,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
             <h1>${data.name.common}</h1>
             <div>
                 <div>
-                    <p>Native Name${ native_names.length > 1 ? 's' : ''}: <span>${native_names.join(',  ')}</span></p>
+                    <p>Native Name${native_names.length > 1 ? 's' : ''}: <span>${native_names.join(',  ')}</span></p>
                     <p>Population: <span>${data.population}</span></p>
                     <p>Region: <span>${data.region}</span></p>
                     <p>Sub Region: <span>${data.subregion}</span></p>
@@ -60,7 +61,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
             <div>
                 <h3>Border Countries:</h3>
                 <ul>
-                    ${ borders.length ? `<li><button>${borders.join('</button></li><li><button>')}</button></li>` : ' No border countries'} 
+                    ${borders.length ? `<li><button>${borders.join('</button></li><li><button>')}</button></li>` : '<p style="padding-left: .25rem;"> No border countries</p>'} 
                 </ul>
             </div>
         </div>
@@ -68,7 +69,7 @@ fetch(`${REST_API_URL}name/${encodedCountry}`).then(response => response.json())
         if (contents) {
             contents.innerHTML = htmlText
             document.title = `${country} | Frontend Mentor`
-            const buttons = contents.querySelectorAll('.country_details ul button') as NodeListOf<HTMLButtonElement> 
+            const buttons = contents.querySelectorAll('.country_details ul button') as NodeListOf<HTMLButtonElement>
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
                     const name = button.innerText.toLowerCase()
